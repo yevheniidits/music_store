@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+SERVICE=$1
+HAS_DOCKER=$(which docker)
+HAS_COMPOSE=$(which docker-compose)
+
+echo "Checking pre-requirements..."
+# Check docker and docker-compose installation
+if [ -z [ "$HAS_DOCKER" && "$HAS_COMPOSE" ]]; then
+
+  if [ -z "$HAS_DOCKER"]; than
+    echo "No docker installation on your system"
+  else
+    echo -e "Found docker installation at $HAS"
+  fi
+
+  if [ -z "$HAS_COMPOSE"]; than
+    echo "Docker-compose was not found"
+  fi
+
+else
+  # check for argument
+  if [ "$SERVICE" ]; then
+    echo -e "Building service: $SERVICE..."
+  else
+    echo "Building full project..."
+  fi
+
+fi
