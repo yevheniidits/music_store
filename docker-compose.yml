@@ -1,9 +1,9 @@
 version: '3'
 
 # Local volumes for services to persist the data even if the container is destroyed or recreated.
-volumes:
-  pg_data:
-    driver: local
+#volumes:
+#  pg_data:
+#    driver: local
 
 # Custom x-attribute with common settings for backend service.
 x-base: &base-backend
@@ -17,16 +17,21 @@ x-base: &base-backend
 services:
   db:
     image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     env_file:
       - .env
-    volumes:
-      - 'pg_data:/var/lib/postgresql/data'
+#    volumes:
+#      - 'pg_data:/var/lib/postgresql/data'
     ports:
       - '5432:5432'
 
   backend:
     <<: *base-backend
     build: ./backend
+    image: backend/backend:1.0.0
     ports:
       - '8000:8000'
     command: python manage.py runserver 0.0.0.0:8000

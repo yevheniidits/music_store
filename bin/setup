@@ -1,29 +1,34 @@
 #!/usr/bin/env bash
 
-SERVICE=$1
 HAS_DOCKER=$(which docker)
 HAS_COMPOSE=$(which docker-compose)
 
 echo "Checking pre-requirements..."
-# Check docker and docker-compose installation
-if [ -z [ "$HAS_DOCKER" && "$HAS_COMPOSE" ]]; then
-
-  if [ -z "$HAS_DOCKER"]; than
-    echo "No docker installation on your system"
-  else
-    echo -e "Found docker installation at $HAS"
-  fi
-
-  if [ -z "$HAS_COMPOSE"]; than
-    echo "Docker-compose was not found"
-  fi
-
+if [ -z "$HAS_DOCKER" ]; then
+  echo "No docker installation on your system"
+  exit 1
 else
-  # check for argument
-  if [ "$SERVICE" ]; then
-    echo -e "Building service: $SERVICE..."
-  else
-    echo "Building full project..."
-  fi
+  echo -e "Found docker installation at $HAS_DOCKER"
+fi
 
+if [ -z "$HAS_COMPOSE" ]; then
+  echo "Docker-compose was not found"
+  exit 1
+else
+  echo -e "Found docker-compose installation at $HAS_COMPOSE"
+fi
+
+docker-compose build
+docker-compose up -d backend
+bash bin/manage migrate
+
+INPUT_DEFAULT=" [Y/n]"
+read -r -p "Would you like to start the docker containers right now$INPUT_DEFAULT? " OPEN_CONFIRM
+if [[ "$OPEN_CONFIRM" == "" ]]; then
+    OPEN_CONFIRM="y";
+fi
+if [[ "$OPEN_CONFIRM" == *"y"* || "$OPEN_CONFIRM" == *"Y"* ]]; then
+    docker-compose up
+else
+    echo -e "\nYou can start them manually via docker-compose up"
 fi
