@@ -20,7 +20,6 @@ fi
 
 docker-compose build
 docker-compose up -d backend
-bash bin/manage migrate
 
 INPUT_DEFAULT=" [Y/n]"
 read -r -p "Would you like to start the docker containers right now$INPUT_DEFAULT? " OPEN_CONFIRM
