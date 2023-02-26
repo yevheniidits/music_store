@@ -1,25 +1,36 @@
 from rest_framework import serializers
 
-from apps.products.models import Brand
+from apps.products.models import Product
 
 
-class BrandListSerializer(serializers.ModelSerializer):
+class ProductListSerializer(serializers.ModelSerializer):
+    brand = serializers.CharField(source='brand.name', read_only=True)
+    category = serializers.CharField(source='category.name', read_only=True)
+
     class Meta:
-        model = Brand
+        model = Product
         fields = (
             'id',
-            'name',
-            'country',
+            'brand',
+            'category',
+            'title',
         )
 
 
-class BrandRetrieveSerializer(serializers.ModelSerializer):
+class ProductRetrieveSerializer(serializers.ModelSerializer):
+    brand = serializers.CharField(source='brand.name', read_only=True)
+    category = serializers.CharField(source='category.name', read_only=True)
+    country = serializers.CharField(source='brand.country', read_only=True)
+
     class Meta:
-        model = Brand
+        model = Product
         fields = (
-            'id',
-            'name',
+            'brand',
+            'category',
             'country',
-            'created_at',
+            'title',
+            'model_year',
+            'price',
+            'available',
             'updated_at',
         )

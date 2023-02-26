@@ -3,5 +3,6 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Countries(models.TextChoices):
-    usa = 'Usa', _('United States of America')
-    ukr = 'Ukr', _('Ukraine')
+    usa = 'USA', _('USA')
+    ukr = 'Ukraine', _('Ukraine')
+    jap = 'Japan', _('Japan')

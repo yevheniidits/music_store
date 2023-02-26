@@ -1,21 +1,22 @@
 from drf_spectacular.utils import extend_schema
 from rest_framework import viewsets
 
-from apps.products.serializers import BrandListSerializer
-from apps.products.serializers import BrandRetrieveSerializer
-from apps.products.models import Brand
+from apps.products.serializers import ProductListSerializer
+from apps.products.serializers import ProductRetrieveSerializer
+
+from apps.products.models import Product
 
 
 @extend_schema(
     tags=['Products'],
 )
-class BrandListRetrieveViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Brand.objects.all()
-    serializer_class = BrandListSerializer
+class ProductListRetrieveViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductListSerializer
 
     def get_serializer_class(self):
         if self.action == 'retrieve':
-            return BrandRetrieveSerializer
+            return ProductRetrieveSerializer
 
-        return BrandListSerializer
+        return ProductListSerializer
 
