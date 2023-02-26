@@ -1,9 +1,9 @@
 version: '3'
 
 # Local volumes for services to persist the data even if the container is destroyed or recreated.
-#volumes:
-#  pg_data:
-#    driver: local
+volumes:
+  pg_data:
+    driver: local
 
 # Custom x-attribute with common settings for backend service.
 x-base: &base-backend
@@ -23,8 +23,8 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     env_file:
       - .env
-#    volumes:
-#      - 'pg_data:/var/lib/postgresql/data'
+    volumes:
+      - 'pg_data:/var/lib/postgresql/data'
     ports:
       - '5432:5432'
 
