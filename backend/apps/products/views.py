@@ -11,6 +11,7 @@ from apps.products.models import Product
     tags=['Products'],
 )
 class ProductListRetrieveViewSet(viewsets.ReadOnlyModelViewSet):
+    # TODO optimize queries
     queryset = Product.objects.all()
     serializer_class = ProductListSerializer
 
@@ -19,4 +20,3 @@ class ProductListRetrieveViewSet(viewsets.ReadOnlyModelViewSet):
             return ProductRetrieveSerializer
 
         return ProductListSerializer
-
